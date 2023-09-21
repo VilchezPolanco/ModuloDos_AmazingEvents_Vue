@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Past Events</title>
+    <link rel="shortcut icon" href="../image/favicon.png" type="image/x-icon">
+    <link rel="stylesheet" href="../style/style.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+</head>
+<body>
+    <!-- HEADER -->
+    <header>
+        <nav class="navbar navbar-expand-lg bg-body-tertiary">
+            <div class="container-fluid d-flex">
+                <a class="navbar-brand" href="../../index.html"><img class="logo" src="../image/amazing_brand.png" alt="Logo"></a>
+                <button class="navbar-toggler colorUno" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                    aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse justify-content-end" id="navbarSupportedContent">
+                    <ul class="navbar-nav mb-2 mb-lg-0 ">
+                        <li class="nav-item">
+                            <a class="nav-link active" style="color: #8e48da;" href="../../index.html">HOME</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link active" style="color: #8e48da;" aria-current="page" href="../pages/upcomingEvents.html">UPCOMING EVENTS</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link active" style="color: #8e48da;" aria-current="page" href="#">PAST EVENTS</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link active" style="color: #8e48da;" aria-current="page" href="../pages/contact.html">CONTACT</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link active" style="color: #8e48da;" aria-current="page" href="../pages/stats.html">STATS</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+    <main class="colorUno" id="app">
+        <!-- CAROUSEL -->
+        <div id="carouselExampleIndicators" class="carousel slide ">
+            <h2 class="text-white position-absolute top-50 start-50 translate-middle z-1 p-3 rounded">PAST EVENTS</h2> 
+            <div class="carousel-indicators">
+                <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active"
+                    aria-current="true" aria-label="Slide 1"></button>
+                <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1"
+                    aria-label="Slide 2"></button>
+                <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2"
+                    aria-label="Slide 3"></button>
+            </div>
+            <div class="carousel-inner">
+                <div class="carousel-item active">
+                    <img src="../image/optional_banner_5.jpg" class="d-block w-100 img-corousel" alt="baner">
+                </div>
+                <div class="carousel-item">
+                    <img src="../image/optional_banner_3.jpg" class="d-block w-100 img-corousel" alt="baner">
+                </div>
+                <div class="carousel-item">
+                    <img src="../image/optional_banner_4.jpg" class="d-block w-100 img-corousel" alt="baner">
+                </div>
+            </div>
+            <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators"
+                data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators"
+                data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Next</span>
+            </button>
+        </div>
+        <!-- END CAROUSEL -->
+        <!-- CATEGORY / SEARCH -->
+        <div class="d-flex flex-column flex-lg-row justify-content-center align-items-center p-3">
+            <div id="contenedor-checkbox" class="d-flex align-items-center flex-wrap justify-content-center">
+                <div class="form-check m-2" v-for="category of arrayCategory">
+                    <input class="form-check-input" type="checkbox" v-model="checked" v-bind:value="category" v-bind:id="category">
+                    <label class="form-check-label" v-bind:for="category">{{category}}</label>
+                </div>                
+            </div>
+            <form action="" class="d-flex col-md-4 p-3" role="search">
+                <input id="inputSearch" class="form-control me-2" type="search" placeholder="Search" aria-label="Search" v-model="inputSearch">
+                <button class="btn but_ton" type="submit"><i class="bi bi-search"></i></button>
+            </form>
+        </div>
+        <!-- END CATEGORY / SEARCH -->
+        <!-- CARD --> 
+        <div id="cardHome" class="d-flex flex-wrap gap-2 justify-content-center">
+            {{filter}}
+            <div class="card colorUno" style="width: 15rem;" v-if="filterEvents.length !=0" v-for="event of filterEvents">
+                <img style="height: 9rem;" v-bind:src="event.image" class="card-img-top p-2 cardImg" v-bind:alt="event.name">
+                <div class="card-body d-flex flex-column align-items-center" style="height: 13rem">
+                    <h5 class="card-title">{{event.name}}</h5>
+                    <p class="card-text text-center description" >{{event.description}}</p>
+                    <div class="d-flex justify-content-around w-100">
+                        <p class="m-0">Price: {{event.price}}$</p>
+                        <a v-bind:href="`../pages/details.html?_id=${event._id}`" class="btn btn-primary">More Info</a>
+                    </div>
+                </div>
+            </div>
+            <div class="text-center w-50" v-else>
+                <img class="w-100" v-bind:src="`https://previews.123rf.com/images/manopjk/manopjk1711/manopjk171100023/90019226-ilustrador-de-oops-p%C3%A1gina-de-error-404-no-encontrado-fondo-de-vector.jpg`">
+            </div>
+        </div>
+        <!-- END CARD -->
+    </main>
+    <footer class="d-flex  justify-content-between px-4 colorDos py-3 mt-1">
+        <div>
+            <img class="redSocial" src="../image/instagram.png" alt="intagram">
+            <img class="redSocial" src="../image/facebook.png" alt="facebook">
+            <img class="redSocial" src="../image/whatsapp.png" alt="whatsapp">
+        </div>
+        <p class="pt-2">
+            COHORT: 51
+        </p>
+    </footer>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <script type="module" src="../script/pastEvents.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous">
+        </script>
+</body>
+</html>
